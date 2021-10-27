@@ -1,0 +1,3 @@
+".\Objects\main.obj" 
+TO ".\Objects\4feladatv2" 
+PRINT(".\Listings\4feladatv2.m51")

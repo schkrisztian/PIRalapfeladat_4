@@ -1,0 +1,172 @@
+A51 MACRO ASSEMBLER  MAIN                                                                 10/27/2021 11:50:49 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\main.obj
+ASSEMBLER INVOKED BY: C:\PIR\Keil_v5\C51\BIN\A51.EXE main.a51 SET(SMALL) DEBUG PRINT(.\Listings\main.lst) OBJECT(.\Objec
+                      ts\main.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1             
+                       2     
+                       3     
+                       4     
+                       5     
+                       6     
+                       7     
+                       8     
+                       9     
+                      10     
+                      11     
+                      12     
+                      13     
+                      14     
+                      15     
+                      16     
+                      17     
+                      18     
+                      19     
+                      20     
+                      21     
+                      22     
+                      23             
+----                  24             CSEG    AT      0000H
+0000 020030           25             LJMP    0030H
+                      26             
+----                  27             CSEG    AT      000BH
+000B 020055           28             LJMP    ISR_TIMER0_OVERFLOW
+                      29             
+                      30             
+----                  31             CSEG    AT      0030H
+                      32             
+                      33             
+                      34             
+                      35             
+                      36             
+0030 120061           37             LCALL   S_ENABLE_INTERUP
+0033 120066           38             LCALL   S_INIT_TIMER0_200U
+                      39             
+0036 759000           40             MOV     P1,#00H
+                      41             
+                      42             
+0039                  43     CHECK_BUTTON:
+                      44     
+0039 E590             45             MOV     A,P1
+003B 5403             46             ANL     A,#03H
+                      47             
+003D B40308           48             CJNE    A,#03H,NOT_BOTH_PUSHED
+                      49             
+0040 C28C             50             CLR     TR0
+0042 758A00           51             MOV     TL0,#00H
+                      52             
+0045 020039           53             LJMP    CHECK_BUTTON
+                      54             
+0048                  55     NOT_BOTH_PUSHED:
+                      56             
+0048 7003             57             JNZ     FIRST_PUSHED
+A51 MACRO ASSEMBLER  MAIN                                                                 10/27/2021 11:50:49 PAGE     2
+
+                      58             
+                      59             
+004A 020039           60             LJMP    CHECK_BUTTON
+                      61             
+                      62             
+004D                  63     FIRST_PUSHED:     
+004D D28C             64             SETB    TR0
+                      65             
+                      66             
+004F 020039           67             LJMP    CHECK_BUTTON
+                      68             
+                      69             
+                      70             
+0052                  71     END_OF_PROGRAM:
+0052 020052           72             LJMP    END_OF_PROGRAM
+                      73            
+                      74            
+                      75            
+                      76            
+0055                  77     ISR_TIMER0_OVERFLOW:
+0055 DD09             78             DJNZ    R5,ISR_TIMER0_OVERFLOW_END
+0057 7D64             79             MOV     R5,#64H
+0059 DE05             80             DJNZ    R6,ISR_TIMER0_OVERFLOW_END
+005B 7E10             81             MOV     R6,#10H
+                      82             
+005D 120074           83             LCALL   AUTOOFF
+                      84     
+0060                  85     ISR_TIMER0_OVERFLOW_END:        
+0060 32               86             RETI
+                      87            
+0061                  88     S_ENABLE_INTERUP:
+                      89             
+                      90     
+                      91     
+                      92     
+                      93     
+                      94             
+0061 D2AF             95             SETB    EA
+0063 D2A9             96             SETB    ET0
+                      97             
+0065 22               98             RET
+                      99             
+0066                 100     S_INIT_TIMER0_200U:
+                     101            
+                     102     
+                     103     
+                     104     
+                     105     
+                     106     
+                     107     
+                     108      
+                     109                    
+0066 53890F          110             ANL     TMOD, #0FH
+0069 438902          111             ORL     TMOD, #00000010B
+                     112             
+006C 758C38          113             MOV     TH0,#38H
+                     114             
+006F 7D64            115             MOV     R5,#64H
+0071 7E10            116             MOV     R6,#10H
+                     117             
+                     118     
+0073 22              119             RET
+                     120             
+0074                 121     AUTOOFF:
+0074 C28C            122             CLR     TR0
+0076 759000          123             MOV     P1,#00H
+A51 MACRO ASSEMBLER  MAIN                                                                 10/27/2021 11:50:49 PAGE     3
+
+                     124             
+0079 22              125             RET
+                     126             
+                     127             
+                     128             END
+A51 MACRO ASSEMBLER  MAIN                                                                 10/27/2021 11:50:49 PAGE     4
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E                  T Y P E  V A L U E   ATTRIBUTES
+
+AUTOOFF . . . . . . . .  C ADDR   0074H   A   
+CHECK_BUTTON. . . . . .  C ADDR   0039H   A   
+EA. . . . . . . . . . .  B ADDR   00A8H.7 A   
+END_OF_PROGRAM. . . . .  C ADDR   0052H   A   
+ET0 . . . . . . . . . .  B ADDR   00A8H.1 A   
+FIRST_PUSHED. . . . . .  C ADDR   004DH   A   
+ISR_TIMER0_OVERFLOW . .  C ADDR   0055H   A   
+ISR_TIMER0_OVERFLOW_END  C ADDR   0060H   A   
+NOT_BOTH_PUSHED . . . .  C ADDR   0048H   A   
+P1. . . . . . . . . . .  D ADDR   0090H   A   
+S_ENABLE_INTERUP. . . .  C ADDR   0061H   A   
+S_INIT_TIMER0_200U. . .  C ADDR   0066H   A   
+TH0 . . . . . . . . . .  D ADDR   008CH   A   
+TL0 . . . . . . . . . .  D ADDR   008AH   A   
+TMOD. . . . . . . . . .  D ADDR   0089H   A   
+TR0 . . . . . . . . . .  B ADDR   0088H.4 A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
